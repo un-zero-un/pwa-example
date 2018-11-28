@@ -1,17 +1,21 @@
-import React, {PureComponent} from 'react';
-import { graphql } from 'react-apollo';
+import * as React from "react";
 
-import query from '../queries/getQuotes.graphql';
+import {QuoteEdge} from "../types/Quote";
 
-console.log(require('../queries/getQuotes.graphql'));
-
-type Props = {};
-
-class QuoteList extends PureComponent<Props> {
-    render() {
-        return 'Coucou';
-    }
+type Props = {
+    quotes: QuoteEdge[],
 }
 
-
-export default graphql(query)(QuoteList);
+export default ({quotes}: Props) => (
+    <section>
+        {quotes.map(edge => (
+            <blockquote key={edge.node.id}>
+                <h3>{edge.node.title}</h3>
+                <p>
+                    {edge.node.text}
+                </p>
+                <cite>{edge.node.author}</cite>
+            </blockquote>
+        ))}
+    </section>
+);

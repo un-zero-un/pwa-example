@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import {applyMiddleware, createStore} from 'redux';
 import {Provider} from 'react-redux';
 import {createLogger} from 'redux-logger';
+import {ApolloProvider} from "react-apollo";
+import ApolloClient from "apollo-boost";
 
 import * as serviceWorker from './serviceWorker';
 import App from "./core/containers/App";
@@ -16,10 +18,16 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const store = createStore(reducer, applyMiddleware(...middleware));
+const apolloClient = new ApolloClient({
+    uri: process.env.REACT_APP_API_ENTRYPOINT + '/graphql'
+});
+
 
 ReactDOM.render(
     <Provider store={store}>
-        <App />
+        <ApolloProvider client={apolloClient}>
+            <App/>
+        </ApolloProvider>
     </Provider>,
     document.getElementById('root')
 );
