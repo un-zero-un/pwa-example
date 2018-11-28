@@ -59,7 +59,7 @@ services:
         ports:
             - '5432:5432'
 
-    client:
+    app:
         image: ${CONTAINER_REGISTRY_BASE}/app
         build:
             context: ./app
@@ -73,6 +73,17 @@ services:
         ports:
             - '80:3000'
 
+    h2-proxy:
+        build:
+            context: ./proxy
+        depends_on:
+            - app
+            - api_nginx
+            - cache
+        ports:
+        - '443:443'
+        - '8443:8443'
+        - '8444:8444'
 
 volumes:
     database-data: ~
