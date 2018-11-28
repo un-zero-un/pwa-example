@@ -3,9 +3,12 @@
     "version": "0.1.0",
     "private": true,
     "dependencies": {
+        "@babel/cli": "^7.1.5",
+        "@babel/preset-typescript": "^7.1.0",
         "@types/graphql": "^14.0.3",
         "@types/jest": "23.3.9",
         "@types/node": "10.12.10",
+        "@types/node-fetch": "^2.1.4",
         "@types/react": "16.7.7",
         "@types/react-dom": "16.0.11",
         "@types/react-redux": "^6.0.10",
@@ -15,9 +18,11 @@
         "apollo-cache-persist": "^0.1.1",
         "apollo-client": "^2.4.7",
         "apollo-link-http": "^1.5.7",
+        "express": "^4.16.4",
         "graphql": "^14.0.2",
         "graphql-tag": "^2.10.0",
         "node": "^10.13.0",
+        "node-fetch": "^2.3.0",
         "node-sass": "^4.10.0",
         "normalize.css": "^8.0.1",
         "react": "^16.7.0-alpha.2",
@@ -31,7 +36,7 @@
     },
     "scripts": {
         "start": "react-scripts start",
-        "build": "react-scripts build",
+        "build": "react-scripts build && babel src -d views --extensions \".ts,.tsx\" && cd src && find . -name styles | xargs printf -- '../views/%s\n' | xargs mkdir -p && find . -name *.scss | xargs printf -- '../views/%s\n' | xargs touch && cd -",
         "test": "react-scripts test",
         "eject": "react-scripts eject"
     },

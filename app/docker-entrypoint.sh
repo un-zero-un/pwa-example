@@ -9,7 +9,7 @@ if [ "$1" = '' ]; then
         yarn run start
     else
         echo "Serving prod build"
-        serve -s build -p 3000
+        node server.js
     fi
 else
     exec $@

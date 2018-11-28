@@ -12,12 +12,13 @@ RUN yarn install
 COPY src src/
 COPY public public/
 COPY tsconfig.json ./
+COPY .babelrc ./
 COPY .env ./
 
 RUN source .env; \
     yarn build
 
-
+COPY server.js ./
 
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint
 RUN chmod a+x /usr/local/bin/docker-entrypoint
