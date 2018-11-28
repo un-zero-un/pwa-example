@@ -8,13 +8,14 @@ const app = express();
 
 const ssr = require('./views/server');
 app.get('/', (req, res) => {
-    const { state, content } = ssr();
-    console.log(content, state);
+    ssr().then(({ state, content, apolloState }) => {
+        console.log(content, state, apolloState);
 
-    res.send(
-        indexTemplate
-            .replace(/%%%CONTENT%%%/g, content)
-    );
+        res.send(
+            indexTemplate
+                .replace(/%%%CONTENT%%%/g, content)
+        );
+    });
 });
 
 app.use('/', express.static(path.resolve(__dirname, 'build')));
