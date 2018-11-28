@@ -4,7 +4,11 @@ import {applyMiddleware, createStore} from 'redux';
 import {Provider} from 'react-redux';
 import {createLogger} from 'redux-logger';
 import {ApolloProvider} from "react-apollo";
-import ApolloClient from "apollo-boost";
+import ApolloClient from "apollo-client";
+import {HttpLink} from "apollo-link-http";
+import {persistCache} from 'apollo-cache-persist';
+import {PersistedData, PersistentStorage} from 'apollo-cache-persist/types';
+import {InMemoryCache, NormalizedCacheObject} from "apollo-cache-inmemory";
 
 import * as serviceWorker from './serviceWorker';
 import App from "./core/containers/App";
@@ -18,8 +22,13 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const store = createStore(reducer, applyMiddleware(...middleware));
+const cache = new InMemoryCache({});
+
+persistCache({cache, storage: window.localStorage as PersistentStorage<PersistedData<NormalizedCacheObject>>});
+
 const apolloClient = new ApolloClient({
-    uri: process.env.REACT_APP_API_ENTRYPOINT + '/graphql'
+    cache: cache,
+    link: new HttpLink({uri: process.env.REACT_APP_API_ENTRYPOINT + '/graphql'}),
 });
 
 

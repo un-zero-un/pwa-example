@@ -6,7 +6,7 @@ export type Edge<T> = {
 export type Connection<T> = {
     totalCount?: number,
     pageInfo?: PageInfo,
-    edges: Array<Edge<T>>
+    edges: Edge<T>[]
 }
 
 export type PageInfo = {
