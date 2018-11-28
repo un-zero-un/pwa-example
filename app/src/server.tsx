@@ -32,8 +32,10 @@ module.exports = () => {
 
     return getDataFromTree(Tree)
         .then(() => {
-            const content = renderToString(Tree);
-
-            return {content, state: store.getState(), apolloState: apolloClient.extract()};
+            return {
+                content: renderToString(Tree),
+                state: store.getState(),
+                apolloState: apolloClient.extract()
+            };
         });
 };

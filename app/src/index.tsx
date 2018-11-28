@@ -16,13 +16,24 @@ import reducer from './core/reducers';
 
 import './index.css';
 
+declare global {
+    interface Window {
+        __REDUX_STATE?: any;
+        __APOLLO_STATE?: any;
+    }
+}
+
 let middleware = [];
 if (process.env.NODE_ENV !== 'production') {
     middleware.push(createLogger());
 }
 
-const store = createStore(reducer, applyMiddleware(...middleware));
-const cache = new InMemoryCache({});
+const store = createStore(reducer, window.__REDUX_STATE || null, applyMiddleware(...middleware));
+const cache = new InMemoryCache();
+
+if (window.__APOLLO_STATE) {
+    cache.restore(window.__APOLLO_STATE);
+}
 
 persistCache({cache, storage: window.localStorage as PersistentStorage<PersistedData<NormalizedCacheObject>>});
 
@@ -31,8 +42,9 @@ const apolloClient = new ApolloClient({
     link: new HttpLink({uri: process.env.REACT_APP_API_ENTRYPOINT + '/graphql'}),
 });
 
+const renderMethod = window.__REDUX_STATE ? ReactDOM.hydrate : ReactDOM.render;
 
-ReactDOM.render(
+renderMethod(
     <Provider store={store}>
         <ApolloProvider client={apolloClient}>
             <App/>
