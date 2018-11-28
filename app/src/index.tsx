@@ -9,6 +9,7 @@ import {HttpLink} from "apollo-link-http";
 import {persistCache} from 'apollo-cache-persist';
 import {PersistedData, PersistentStorage} from 'apollo-cache-persist/types';
 import {InMemoryCache, NormalizedCacheObject} from "apollo-cache-inmemory";
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import * as serviceWorker from './serviceWorker';
 import App from "./core/containers/App";
@@ -23,12 +24,15 @@ declare global {
     }
 }
 
+
+
+
 let middleware = [];
 if (process.env.NODE_ENV !== 'production') {
     middleware.push(createLogger());
 }
 
-const store = createStore(reducer, window.__REDUX_STATE || null, applyMiddleware(...middleware));
+const store = createStore(reducer, window.__REDUX_STATE || undefined, applyMiddleware(...middleware));
 const cache = new InMemoryCache();
 
 if (window.__APOLLO_STATE) {
@@ -47,7 +51,9 @@ const renderMethod = window.__REDUX_STATE ? ReactDOM.hydrate : ReactDOM.render;
 renderMethod(
     <Provider store={store}>
         <ApolloProvider client={apolloClient}>
-            <App/>
+            <Router>
+                <App />
+            </Router>
         </ApolloProvider>
     </Provider>,
     document.getElementById('root')
