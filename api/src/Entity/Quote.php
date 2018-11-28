@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -19,10 +23,13 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          "create"
  *     }
  * )
+ * @ApiFilter(SearchFilter::class, properties={"slug"="exact"})
+ * @ApiFilter(OrderFilter::class, properties={"createdAt"}, arguments={"orderParameterName"="order"})
  * @ORM\Entity()
  * @ORM\Table(
  *     indexes={
- *          @ORM\Index(name="quote_created_at", columns={"created_at"})
+ *          @ORM\Index(name="quote_created_at", columns={"created_at"}),
+ *          @ORM\Index(name="quote_slug", columns={"slug"}),
  *     }
  * )
  * @ORM\HasLifecycleCallbacks()
@@ -45,6 +52,14 @@ class Quote
      * @var string
      */
     private $title;
+
+    /**
+     * @Gedmo\Slug(fields={"title"}, unique=true, separator="-", updatable=true)
+     * @ORM\Column(type="string", nullable=false)
+     *
+     * @var string
+     */
+    private $slug;
 
     /**
      * @Assert\NotBlank()
@@ -97,6 +112,16 @@ class Quote
     public function setTitle(string $title): void
     {
         $this->title = $title;
+    }
+
+    public function getSlug(): string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): void
+    {
+        $this->slug = $slug;
     }
 
     public function getAuthor(): string

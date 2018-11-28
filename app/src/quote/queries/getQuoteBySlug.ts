@@ -1,11 +1,8 @@
 import gql from "graphql-tag";
 
 export default gql`
-    query getQuotes {
-        quotes(
-            first: 25,
-            order: { createdAt: "DESC" }
-        ) {
+    query getQuoteBySlug($slug: String) {
+        quotes(slug: $slug) {
             totalCount
             pageInfo {
                 endCursor

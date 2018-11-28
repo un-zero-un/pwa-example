@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import {QuoteEdge} from "../types/Quote";
+import {Link} from "react-router-dom";
 
 type Props = {
     quotes: QuoteEdge[],
@@ -8,9 +9,13 @@ type Props = {
 
 export default ({quotes}: Props) => (
     <section>
-        {quotes.map(edge => (
+        {quotes.map((edge) => (
             <blockquote key={edge.node.id}>
-                <h3>{edge.node.title}</h3>
+                <h3>
+                    <Link to={`/quotes/${edge.node.slug}`}>
+                        {edge.node.title}
+                    </Link>
+                </h3>
                 <p>
                     {edge.node.text}
                 </p>
