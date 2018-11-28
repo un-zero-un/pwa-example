@@ -7,11 +7,12 @@ import ApolloClient from "apollo-client";
 import {createHttpLink} from "apollo-link-http";
 import {InMemoryCache} from "apollo-cache-inmemory";
 import fetch from 'node-fetch';
+import { StaticRouter as Router } from 'react-router';
 
 import App from "./core/containers/App";
 import reducer from './core/reducers';
 
-module.exports = () => {
+module.exports = (url: string) => {
     const store = createStore(reducer);
     const apolloClient = new ApolloClient({
         ssrMode: true,
@@ -21,11 +22,13 @@ module.exports = () => {
             uri: process.env.API_PLATFORM_CLIENT_GENERATOR_ENTRYPOINT + '/graphql',
         }),
     });
-
+    const context = {};
     const Tree = (
         <Provider store={store}>
             <ApolloProvider client={apolloClient}>
-                <App/>
+                <Router location={url} context={context}>
+                    <App/>
+                </Router>
             </ApolloProvider>
         </Provider>
     );

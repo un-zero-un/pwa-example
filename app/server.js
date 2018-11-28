@@ -1,14 +1,19 @@
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
+const ssr = require('./views/server');
 
 const indexTemplate = fs.readFileSync(path.resolve(__dirname, 'build/index.html'), 'utf8');
 
 const app = express();
 
-const ssr = require('./views/server');
-app.get('/', (req, res) => {
-    ssr().then(({ state, content, apolloState }) => {
+app.use('/static', express.static(path.resolve(__dirname, 'build/static')));
+app.use('/favicon.ico', express.static(path.resolve(__dirname, 'build/favicon.ico')));
+
+app.get('/*', (req, res) => {
+    console.log(`Displaying ${req.url}`);
+
+    ssr(req.url).then(({ state, content, apolloState }) => {
         res.send(
             indexTemplate
                 .replace(/%%%CONTENT%%%/g, content)
@@ -16,8 +21,6 @@ app.get('/', (req, res) => {
         );
     });
 });
-
-app.use('/', express.static(path.resolve(__dirname, 'build')));
 
 app.disable('x-powered-by');
 app.listen(process.env.PORT || 3000, function () {
