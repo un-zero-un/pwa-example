@@ -16,7 +16,6 @@ services:
         volumes:
             - ./api:/app/api:rw,cached
 
-
     api_nginx:
         image: ${CONTAINER_REGISTRY_BASE}/api_nginx
         build:

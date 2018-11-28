@@ -1,0 +1,5 @@
+App\Entity\Quote:
+    quote__{1..100}:
+        title: <sentence()>
+        text: <sentences(5, true)>
+        author: <email()>

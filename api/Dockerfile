@@ -1,4 +1,4 @@
-ARG PHP_VERSION=7.2
+ARG PHP_VERSION=7.3.0RC6
 ARG NGINX_VERSION=1.15
 ARG ALPINE_VERSION=3.8
 ARG VARNISH_VERSION=6.0
@@ -8,8 +8,8 @@ FROM php:${PHP_VERSION}-fpm-alpine${ALPINE_VERSION} AS api_php
 ARG APCU_VERSION=5.1.14
 
 RUN set -eux; \
-    apk add --no-cache postgresql-client libpq libstdc++ make git icu acl; \
-    apk add --no-cache --virtual .build-deps ${PHPIZE_DEPS} icu-dev postgresql-dev zlib-dev; \
+    apk add --no-cache postgresql-client libpq libstdc++ make git icu acl libzip; \
+    apk add --no-cache --virtual .build-deps ${PHPIZE_DEPS} icu-dev postgresql-dev zlib-dev libzip-dev; \
     docker-php-ext-install zip pdo_pgsql intl pcntl mbstring opcache; \
     pecl install apcu-${APCU_VERSION}; \
     docker-php-ext-enable apcu; \
