@@ -3,6 +3,7 @@ import {Query, QueryResult} from 'react-apollo';
 
 import query from '../queries/getQuoteBySlug';
 import {Quote, QuoteConnection} from "../types/Quote";
+import {Helmet} from "react-helmet";
 
 type Props = {
     slug: string,
@@ -26,7 +27,18 @@ export default class QuoteProvider extends PureComponent<Props> {
                         return null;
                     }
 
-                    return this.props.render({quote: data.quotes.edges[0].node});
+                    const quote = data.quotes.edges[0].node;
+
+                    return (
+                        <>
+                            <Helmet>
+                                <title>{quote.title} — PWA Fortunes</title>
+                                <meta name="description" content={quote.title + "\n" + quote.text.substr(0, 200) + '…'} />
+                            </Helmet>
+
+                            {this.props.render({quote: quote})}
+                        </>
+                    );
                 }}
             </Query>
         );

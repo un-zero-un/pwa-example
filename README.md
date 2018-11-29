@@ -12,3 +12,4 @@ Exposes data with REST (JSON-LD / Hydra) and GraphQL.
  * A React / Redux app using Apollo for GraphQL queries and Express for SSR
  * Offline first cache strategy
  * A fully functional docker env
+ * Optimized SSO (with SSR and Real-time updates)

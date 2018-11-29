@@ -7,7 +7,8 @@ import ApolloClient from "apollo-client";
 import {createHttpLink} from "apollo-link-http";
 import {InMemoryCache} from "apollo-cache-inmemory";
 import fetch from 'node-fetch';
-import { StaticRouter as Router } from 'react-router';
+import {StaticRouter as Router} from 'react-router';
+import Helmet from "react-helmet";
 
 import App from "./core/containers/App";
 import reducer from './core/reducers';
@@ -35,10 +36,14 @@ module.exports = (url: string) => {
 
     return getDataFromTree(Tree)
         .then(() => {
+            const content = renderToString(Tree);
+            const helmet = Helmet.renderStatic();
+
             return {
-                content: renderToString(Tree),
+                content,
+                helmet,
                 state: store.getState(),
-                apolloState: apolloClient.extract()
+                apolloState: apolloClient.extract(),
             };
         });
 };

@@ -13,11 +13,11 @@ app.use('/favicon.ico', express.static(path.resolve(__dirname, 'build/favicon.ic
 app.get('/*', (req, res) => {
     console.log(`Displaying ${req.url}`);
 
-    ssr(req.url).then(({ state, content, apolloState }) => {
+    ssr(req.url).then(({ state, content, apolloState, helmet }) => {
         res.send(
             indexTemplate
                 .replace(/%%%CONTENT%%%/g, content)
-                .replace(/<\/head>/g, `<script>window.__REDUX_STATE = ${JSON.stringify(state)};window.__APOLLO_STATE=${JSON.stringify(apolloState)};</script></head>`)
+                .replace(/<\/head>/g, `<script>window.__REDUX_STATE = ${JSON.stringify(state)};window.__APOLLO_STATE=${JSON.stringify(apolloState)};</script>${helmet.title.toString()}${helmet.meta.toString()}${helmet.link.toString()}</head>`)
         );
     });
 });
