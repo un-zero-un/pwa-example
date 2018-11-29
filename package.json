@@ -2,6 +2,7 @@
   "dependencies": {
     "apollo-cache-hermes": "^0.8.6",
     "apollo-client": "^2.4.7",
-    "node-sass": "^4.10.0"
+    "node-sass": "^4.10.0",
+    "typeface-roboto": "^0.0.54"
   }
 }

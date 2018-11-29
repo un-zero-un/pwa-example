@@ -1,7 +1,8 @@
-import * as React from "react";
+import React from "react";
+import {Link} from "react-router-dom";
+import {Divider, List, ListItem, ListItemText, Typography} from "@material-ui/core";
 
 import {QuoteEdge} from "../types/Quote";
-import {Link} from "react-router-dom";
 
 type Props = {
     quotes: QuoteEdge[],
@@ -9,21 +10,25 @@ type Props = {
 
 export default ({quotes}: Props) => (
     <>
-        <h2>Quote list</h2>
-        <section>
-            {quotes.map((edge) => (
-                <blockquote key={edge.node.id}>
-                    <h3>
-                        <Link to={`/quotes/${edge.node.slug}`}>
-                            {edge.node.title}
-                        </Link>
-                    </h3>
-                    <p>
-                        {edge.node.text}
-                    </p>
-                    <cite>{edge.node.author}</cite>
-                </blockquote>
+        <List>
+            {quotes.map(edge => (
+                <>
+                    <ListItem component="blockquote" key={edge.node.id}>
+                        <ListItemText>
+                            <Link to={`/quotes/${edge.node.slug}`}>
+                                <Typography variant="h4">
+                                    {edge.node.title}
+                                </Typography>
+                            </Link>
+                            <p>
+                                {edge.node.text.substr(0, 200) + (edge.node.text.length > 200 && '…')}
+                            </p>
+                            <cite>{edge.node.author}</cite>
+                        </ListItemText>
+                    </ListItem>
+                    <Divider/>
+                </>
             ))}
-        </section>
+        </List>
     </>
 );
