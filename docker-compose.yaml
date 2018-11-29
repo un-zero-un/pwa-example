@@ -25,6 +25,7 @@ services:
 
     database:
         image: postgres:11-alpine
+        volumes: [ 'database-data:/var/lib/postgresql/data' ]
         environment:
             - POSTGRES_DB=pwapoc
             - POSTGRES_USER=pwapoc

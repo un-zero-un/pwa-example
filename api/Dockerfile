@@ -37,6 +37,7 @@ RUN set -eux; \
 
 COPY bin bin/
 COPY config config/
+COPY fixtures fixtures/
 COPY public public/
 COPY src src/
 

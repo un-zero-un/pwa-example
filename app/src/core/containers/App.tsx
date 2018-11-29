@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Redirect, Route} from 'react-router';
+import {Route} from 'react-router';
 import {Helmet} from 'react-helmet';
 import {CssBaseline} from '@material-ui/core';
 
@@ -25,8 +25,7 @@ class App extends Component {
                     <TopBar/>
 
                     <main>
-                        <Route exact path="/" render={() => <Redirect to="/quotes"/>}/>
-                        <Route exact path="/quotes"
+                        <Route exact path="/"
                                render={() => <QuoteListProvider render={props => <QuoteList {...props} />}/>}/>
                         <Route exact path="/quotes/:slug"
                                render={({match}) => <QuoteProvider slug={match.params.slug} render={props => <Quote {...props} />}/>}/>

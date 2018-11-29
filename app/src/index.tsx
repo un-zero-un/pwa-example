@@ -9,13 +9,14 @@ import {HttpLink} from "apollo-link-http";
 import {persistCache} from 'apollo-cache-persist';
 import {PersistedData, PersistentStorage} from 'apollo-cache-persist/types';
 import {InMemoryCache, NormalizedCacheObject} from "apollo-cache-inmemory";
-import { BrowserRouter as Router } from 'react-router-dom';
+import {BrowserRouter as Router} from 'react-router-dom';
 
 import * as serviceWorker from './serviceWorker';
 import App from "./core/containers/App";
 import reducer from './core/reducers';
 
 import './index.css';
+import {createMuiTheme, MuiThemeProvider} from "@material-ui/core";
 
 declare global {
     interface Window {
@@ -23,8 +24,6 @@ declare global {
         __APOLLO_STATE?: any;
     }
 }
-
-
 
 
 let middleware = [];
@@ -47,12 +46,15 @@ const apolloClient = new ApolloClient({
 });
 
 const renderMethod = window.__REDUX_STATE ? ReactDOM.hydrate : ReactDOM.render;
+const theme = createMuiTheme({typography: {useNextVariants: true}});
 
 renderMethod(
     <Provider store={store}>
         <ApolloProvider client={apolloClient}>
             <Router>
-                <App />
+                <MuiThemeProvider theme={theme}>
+                    <App/>
+                </MuiThemeProvider>
             </Router>
         </ApolloProvider>
     </Provider>,
@@ -64,4 +66,3 @@ renderMethod(
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: http://bit.ly/CRA-PWA
 serviceWorker.unregister();
-

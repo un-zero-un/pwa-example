@@ -2,6 +2,7 @@ import React from 'react';
 import {AppBar, createStyles, IconButton, Theme, Toolbar, Typography, withStyles, WithStyles} from "@material-ui/core";
 import {Apps as AppsIcon} from "@material-ui/icons";
 import {RouteComponentProps, withRouter} from "react-router";
+import {Link} from "react-router-dom";
 
 const styles = (theme: Theme) => createStyles({
     appBar: {
@@ -25,7 +26,7 @@ interface Props extends WithStyles, RouteComponentProps {
 export default withRouter(withStyles(styles)(({classes, history}: Props) => (
     <AppBar position="sticky" color="primary" className={classes.appBar}>
         <Toolbar>
-            <IconButton onClick={() => { history.push('/'); }}>
+            <IconButton component={(props: {}) => <Link to="/" {...props} />}>
                 <AppsIcon className={classes.icon}/>
             </IconButton>
             <Typography variant="h6" noWrap className={classes.title}>

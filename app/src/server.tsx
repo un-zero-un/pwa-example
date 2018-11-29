@@ -8,7 +8,10 @@ import {createHttpLink} from "apollo-link-http";
 import {InMemoryCache} from "apollo-cache-inmemory";
 import fetch from 'node-fetch';
 import {StaticRouter as Router} from 'react-router';
-import Helmet from "react-helmet";
+import Helmet from 'react-helmet';
+import {SheetsRegistry} from 'jss';
+import JssProvider from 'react-jss/lib/JssProvider';
+import {MuiThemeProvider, createMuiTheme, createGenerateClassName} from '@material-ui/core/styles';
 
 import App from "./core/containers/App";
 import reducer from './core/reducers';
@@ -23,12 +26,21 @@ module.exports = (url: string) => {
             uri: process.env.API_PLATFORM_CLIENT_GENERATOR_ENTRYPOINT + '/graphql',
         }),
     });
+
+    const sheetsRegistry = new SheetsRegistry();
+    const sheetsManager = new Map();
+    const theme = createMuiTheme({typography: {useNextVariants: true}});
+    const generateClassName = createGenerateClassName();
     const context = {};
     const Tree = (
         <Provider store={store}>
             <ApolloProvider client={apolloClient}>
                 <Router location={url} context={context}>
-                    <App/>
+                    <JssProvider registry={sheetsRegistry} generateClassName={generateClassName}>
+                        <MuiThemeProvider theme={theme} sheetsManager={sheetsManager}>
+                            <App/>
+                        </MuiThemeProvider>
+                    </JssProvider>
                 </Router>
             </ApolloProvider>
         </Provider>
@@ -42,6 +54,7 @@ module.exports = (url: string) => {
             return {
                 content,
                 helmet,
+                css: sheetsRegistry.toString(),
                 state: store.getState(),
                 apolloState: apolloClient.extract(),
             };

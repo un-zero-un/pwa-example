@@ -4,6 +4,8 @@ services:
     api_php:
         env_file:
             - ./api/.env
+        environment:
+            - APP_ENV=prod
 
     api_nginx:
         ports:
@@ -14,3 +16,5 @@ services:
             - ./app/.env
         ports:
             - '8101:3000'
+        environment:
+            - APP_ENV=prod

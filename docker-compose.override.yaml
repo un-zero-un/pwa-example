@@ -11,7 +11,7 @@ services:
         volumes:
             - ./api/public:/app/api/public:ro
         ports:
-            - '8080:80'
+            - '8100:80'
 
     database:
         ports:
@@ -24,7 +24,7 @@ services:
             - ./app:/app/app:rw,cached
             - /app/app/node_modules
         ports:
-            - '80:3000'
+            - '8101:3000'
 
     proxy:
         build:

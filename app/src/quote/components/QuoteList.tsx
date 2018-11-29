@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Fragment} from "react";
 import {Link} from "react-router-dom";
 import {Divider, List, ListItem, ListItemText, Typography} from "@material-ui/core";
 
@@ -12,8 +12,8 @@ export default ({quotes}: Props) => (
     <>
         <List>
             {quotes.map(edge => (
-                <>
-                    <ListItem component="blockquote" key={edge.node.id}>
+                <Fragment key={edge.node.id}>
+                    <ListItem component="blockquote">
                         <ListItemText>
                             <Link to={`/quotes/${edge.node.slug}`}>
                                 <Typography variant="h4">
@@ -27,7 +27,7 @@ export default ({quotes}: Props) => (
                         </ListItemText>
                     </ListItem>
                     <Divider/>
-                </>
+                </Fragment>
             ))}
         </List>
     </>
