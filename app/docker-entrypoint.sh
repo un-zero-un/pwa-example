@@ -6,9 +6,12 @@ if [ "$1" = '' ]; then
 
     if [ "${APP_ENV}" != 'prod' ]; then
         echo "Launching dev build"
+	yarn
         yarn run start
     else
         echo "Serving prod build"
+	yarn
+	yarn run build
         node server.js
     fi
 else
