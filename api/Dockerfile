@@ -67,12 +67,3 @@ COPY default.nginx.conf /etc/nginx/conf.d/default.conf
 WORKDIR /app/api
 
 COPY --from=api_php /app/api/public public/
-
-
-
-
-
-
-FROM cooptilleuls/varnish:${VARNISH_VERSION}-alpine AS api_varnish
-
-COPY default.varnish.vcl /usr/local/etc/varnish/default.vcl

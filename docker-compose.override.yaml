@@ -1,0 +1,37 @@
+version: '3.7'
+
+services:
+    api_php:
+        env_file:
+            - ./api/.env
+        volumes:
+            - ./api:/app/api:rw,cached
+
+    api_nginx:
+        volumes:
+            - ./api/public:/app/api/public:ro
+        ports:
+            - '8080:80'
+
+    database:
+        ports:
+            - '5432:5432'
+
+    app:
+        env_file:
+            - ./app/.env
+        volumes:
+            - ./app:/app/app:rw,cached
+            - /app/app/node_modules
+        ports:
+            - '80:3000'
+
+    proxy:
+        build:
+            context: ./proxy
+        depends_on:
+            - app
+            - api_nginx
+        ports:
+        - '443:443'
+        - '8443:8443'

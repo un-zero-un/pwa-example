@@ -1,0 +1,16 @@
+version: '3.7'
+
+services:
+    api_php:
+        env_file:
+            - ./api/.env
+
+    api_nginx:
+        ports:
+            - '8100:80'
+
+    app:
+        env_file:
+            - ./app/.env
+        ports:
+            - '8101:3000'
