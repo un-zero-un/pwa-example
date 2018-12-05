@@ -7,14 +7,8 @@ services:
         environment:
             - APP_ENV=prod
 
-    api_nginx:
-        ports:
-            - '8100:80'
-
     app:
         env_file:
             - ./app/.env
-        ports:
-            - '8101:3000'
         environment:
             - APP_ENV=prod

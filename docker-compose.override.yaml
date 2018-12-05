@@ -10,8 +10,6 @@ services:
     api_nginx:
         volumes:
             - ./api/public:/app/api/public:ro
-        ports:
-            - '8100:80'
 
     database:
         ports:
@@ -23,8 +21,6 @@ services:
         volumes:
             - ./app:/app/app:rw,cached
             - /app/app/node_modules
-        ports:
-            - '8101:3000'
 
     proxy:
         build:
@@ -33,5 +29,5 @@ services:
             - app
             - api_nginx
         ports:
-        - '443:443'
-        - '8443:8443'
+            - '443:443'
+            - '8443:8443'

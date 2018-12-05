@@ -11,7 +11,7 @@ import {PersistedData, PersistentStorage} from 'apollo-cache-persist/types';
 import {InMemoryCache, NormalizedCacheObject} from "apollo-cache-inmemory";
 import {BrowserRouter as Router} from 'react-router-dom';
 
-import * as serviceWorker from './serviceWorker';
+//import * as serviceWorker from './serviceWorker';
 import App from "./core/containers/App";
 import reducer from './core/reducers';
 
@@ -61,6 +61,6 @@ renderMethod(
     document.getElementById('root')
 );
 
-
-
-serviceWorker.register();
+navigator.serviceWorker.register('/sw.js')
+    .then(() => console.log('SW registered'))
+    .catch(e => console.warn('Error with sw' + e));
