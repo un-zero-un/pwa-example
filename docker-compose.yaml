@@ -36,7 +36,7 @@ services:
     app:
         env_file: ./app/.env
         image: ${CONTAINER_REGISTRY_BASE}/app
-        ports: [ '${APP_PORT}:3000' ]
+        ports: [ '${APP_PORT}:3001' ]
         build:
             context: ./app
             cache_from:
