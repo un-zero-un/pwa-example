@@ -4,16 +4,18 @@ import {Divider, List, ListItem, ListItemText, Typography} from "@material-ui/co
 
 import {QuoteEdge} from "../types/Quote";
 
+import '../styles/QuoteList.scss';
+
 type Props = {
     quotes: QuoteEdge[],
 }
 
 export default ({quotes}: Props) => (
     <>
-        <List>
+        <List className="QuoteList">
             {quotes.map(edge => (
                 <Fragment key={edge.node.id}>
-                    <ListItem component="blockquote">
+                    <ListItem component="blockquote" className="QuoteList__item">
                         <ListItemText>
                             <Link to={`/quotes/${edge.node.slug}`}>
                                 <Typography variant="h4">
