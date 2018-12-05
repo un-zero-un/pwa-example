@@ -48,6 +48,7 @@
     "scripts": {
         "start": "react-scripts start",
         "ssr-build": "babel src -d views --extensions \".ts,.tsx\" && cd src && find . -name styles | xargs printf -- '../views/%s\n' | xargs mkdir -p && find . -name *.scss | xargs printf -- '../views/%s\n' | xargs touch && cd -",
+        "ssr-watch": "babel src -w -d views --extensions \".ts,.tsx\" && cd src && find . -name styles | xargs printf -- '../views/%s\n' | xargs mkdir -p && find . -name *.scss | xargs printf -- '../views/%s\n' | xargs touch && cd -",
         "build": "react-scripts build && yarn run ssr-build",
         "test": "react-scripts test",
         "eject": "react-scripts eject"

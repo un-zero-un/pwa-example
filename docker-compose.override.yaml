@@ -2,8 +2,6 @@ version: '3.7'
 
 services:
     api_php:
-        env_file:
-            - ./api/.env
         volumes:
             - ./api:/app/api:rw,cached
 
@@ -12,12 +10,9 @@ services:
             - ./api/public:/app/api/public:ro
 
     database:
-        ports:
-            - '5432:5432'
+        ports: [ '5432:5432' ]
 
     app:
-        env_file:
-            - ./app/.env
         volumes:
             - ./app:/app/app:rw,cached
             - /app/app/node_modules
@@ -28,6 +23,4 @@ services:
         depends_on:
             - app
             - api_nginx
-        ports:
-            - '443:443'
-            - '8443:8443'
+        ports: [ '443:443', '8443:8443' ]

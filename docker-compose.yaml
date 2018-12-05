@@ -2,6 +2,7 @@ version: '3.7'
 
 services:
     api_php:
+        env_file: ./api/.env
         image: ${CONTAINER_REGISTRY_BASE}/api_php
         build:
             context: ./api
@@ -33,6 +34,7 @@ services:
             - POSTGRES_PASSWORD=pwapoc
 
     app:
+        env_file: ./app/.env
         image: ${CONTAINER_REGISTRY_BASE}/app
         ports: [ '${APP_PORT}:3000' ]
         build:

@@ -9,6 +9,7 @@ const app = express();
 
 app.use('/static', express.static(path.resolve(__dirname, 'build/static')));
 app.use('/images', express.static(path.resolve(__dirname, 'build/images')));
+app.use('/sw.js', express.static(path.resolve(__dirname, 'build/sw.js')));
 app.use('/favicon.ico', express.static(path.resolve(__dirname, 'build/favicon.ico')));
 app.use('/app.webmanifest', express.static(path.resolve(__dirname, 'build/app.webmanifest')));
 
