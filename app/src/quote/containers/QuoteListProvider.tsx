@@ -3,6 +3,7 @@ import {ChildProps, graphql} from 'react-apollo';
 
 import query from '../queries/getQuotes';
 import {QuoteConnection, QuoteEdge} from "../types/Quote";
+import LoaderIndicator from "../../core/components/LoaderIndicator";
 
 type Response = { quotes: QuoteConnection };
 type OwnProps = {
@@ -17,7 +18,7 @@ class QuoteListProvider extends PureComponent<Props> {
         }
 
         if (this.props.data.loading) {
-            return null;
+            return <LoaderIndicator />;
         }
 
         if (!this.props.data.quotes) {

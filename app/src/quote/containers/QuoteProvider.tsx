@@ -4,6 +4,7 @@ import {Query, QueryResult} from 'react-apollo';
 import query from '../queries/getQuoteBySlug';
 import {Quote, QuoteConnection} from "../types/Quote";
 import {Helmet} from "react-helmet";
+import LoaderIndicator from "../../core/components/LoaderIndicator";
 
 type Props = {
     slug: string,
@@ -20,7 +21,7 @@ export default class QuoteProvider extends PureComponent<Props> {
                     }
 
                     if (loading) {
-                        return null;
+                        return <LoaderIndicator />;
                     }
 
                     if (!data.quotes) {
