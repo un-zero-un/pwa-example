@@ -9,7 +9,7 @@ if [ "$1" = '' ]; then
         yarn
         yarn run ssr-watch &
         yarn run start &
-        node server.js
+        nodemon server.js
     else
         echo "Serving prod build"
         node server.js

@@ -4,7 +4,7 @@ RUN mkdir -p /app/app
 
 WORKDIR /app/app
 
-RUN yarn global add @api-platform/client-generator serve
+RUN yarn global add @api-platform/client-generator serve nodemon
 
 COPY package.json yarn.lock ./
 RUN yarn install
