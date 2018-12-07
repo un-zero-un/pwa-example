@@ -60,6 +60,8 @@ renderMethod(
     document.getElementById('root')
 );
 
-navigator.serviceWorker.register('/sw.js')
-    .then(() => console.log('SW registered'))
-    .catch(e => console.warn('Error with sw' + e));
+if ('serviceWorker' in navigator && 'true' === process.env.REACT_APP_USE_SERVICE_WORKER) {
+    navigator.serviceWorker.register('/sw.js')
+        .then(() => console.log('SW registered'))
+        .catch(e => console.warn('Error with sw' + e));
+}

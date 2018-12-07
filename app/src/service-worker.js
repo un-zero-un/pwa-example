@@ -1,4 +1,4 @@
-const DEBUG = true;
+const DEBUG = false;
 
 const {assets} = global.serviceWorkerOption;
 const CACHE_NAME = '1';

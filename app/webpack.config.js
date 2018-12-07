@@ -18,6 +18,7 @@ let config = Encore
     .enableVersioning(Encore.isProduction())
     .addPlugin(new webpack.DefinePlugin({
         'process.env.REACT_APP_API_ENTRYPOINT': JSON.stringify(process.env.REACT_APP_API_ENTRYPOINT),
+        'process.env.REACT_APP_USE_SERVICE_WORKER': JSON.stringify(process.env.REACT_APP_USE_SERVICE_WORKER),
     }))
     .addPlugin(new ServiceWorkerWebpackPlugin({
         entry:    path.join(__dirname, 'src/service-worker.js'),
