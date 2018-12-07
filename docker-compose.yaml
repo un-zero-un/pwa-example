@@ -39,6 +39,8 @@ services:
         ports: [ '${APP_PORT}:3001' ]
         build:
             context: ./app
+            args:
+                - REACT_APP_API_ENTRYPOINT=${REACT_APP_API_ENTRYPOINT}
             cache_from:
                 - ${CONTAINER_REGISTRY_BASE}/app
 

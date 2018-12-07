@@ -7,7 +7,7 @@ if [ "$1" = '' ]; then
     if [ "${APP_ENV}" != 'prod' ]; then
         echo "Launching dev build"
         yarn
-        yarn run ssr-watch &
+        yarn run start-ssr &
         yarn run start &
         nodemon server.js
     else

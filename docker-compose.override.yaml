@@ -13,6 +13,7 @@ services:
         ports: [ '5432:5432' ]
 
     app:
+        ports: [ '3000:3000' ]
         volumes:
             - ./app:/app/app:rw,cached
             - /app/app/node_modules

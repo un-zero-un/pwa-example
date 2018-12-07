@@ -16,14 +16,15 @@ import {MuiThemeProvider, createMuiTheme, createGenerateClassName} from '@materi
 import App from "./core/containers/App";
 import reducer from './core/reducers';
 
-module.exports = (url: string) => {
+
+export const ssr = (endpoint: string, url: string) => {
     const store = createStore(reducer);
     const apolloClient = new ApolloClient({
         ssrMode: true,
         cache: new InMemoryCache({}),
         link: createHttpLink({
             fetch: fetch as unknown as GlobalFetch['fetch'],
-            uri: process.env.API_PLATFORM_CLIENT_GENERATOR_ENTRYPOINT + '/graphql',
+            uri: endpoint + '/graphql',
         }),
     });
 
