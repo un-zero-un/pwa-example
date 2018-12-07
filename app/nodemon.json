@@ -1,4 +1,4 @@
 {
     "verbose": true,
-    "ignore": ["*.scss", "build/*", "src/*", "views/*"]
+    "ignore": ["*.scss", "src/*", "node_modules/*"]
 }
