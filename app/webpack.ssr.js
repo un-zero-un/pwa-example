@@ -9,6 +9,11 @@ let config = Encore
     .enableSassLoader()
     .cleanupOutputBeforeBuild()
     .addEntry('server', './src/server.tsx')
+    .addRule({
+        test: /\.(graphql|gql)$/,
+        exclude: /node_modules/,
+        loader: 'graphql-tag/loader',
+    })
     .enableSourceMaps(false)
     .enableVersioning(false)
     .getWebpackConfig()

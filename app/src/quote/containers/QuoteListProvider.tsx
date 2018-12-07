@@ -1,7 +1,6 @@
 import React, {PureComponent, ReactNode} from 'react';
 import {ChildProps, graphql} from 'react-apollo';
 
-import query from '../queries/getQuotes';
 import {QuoteConnection, QuoteEdge} from "../types/Quote";
 import LoaderIndicator from "../../core/components/LoaderIndicator";
 
@@ -30,4 +29,4 @@ class QuoteListProvider extends PureComponent<Props> {
 }
 
 
-export default graphql<OwnProps, Response>(query)(QuoteListProvider);
+export default graphql<OwnProps, Response>(require('../queries/getQuotes.graphql'))(QuoteListProvider);

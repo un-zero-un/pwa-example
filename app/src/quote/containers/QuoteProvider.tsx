@@ -1,7 +1,6 @@
 import React, {PureComponent, ReactNode} from 'react';
 import {Query, QueryResult} from 'react-apollo';
 
-import query from '../queries/getQuoteBySlug';
 import {Quote, QuoteConnection} from "../types/Quote";
 import {Helmet} from "react-helmet";
 import LoaderIndicator from "../../core/components/LoaderIndicator";
@@ -14,7 +13,7 @@ type Props = {
 export default class QuoteProvider extends PureComponent<Props> {
     render() {
         return (
-            <Query query={query} variables={{slug: this.props.slug}}>
+            <Query query={require('../queries/getQuoteBySlug.graphql')} variables={{slug: this.props.slug}}>
                 {({data, loading, error}: QueryResult<{quotes: QuoteConnection}>) => {
                     if (!data) {
                         return null;
