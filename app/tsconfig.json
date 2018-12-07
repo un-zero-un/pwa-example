@@ -13,9 +13,6 @@
     "isolatedModules": true,
     "noEmit": false,
     "jsx": "preserve",
-    "lib": ["es6", "dom", "esnext"]
-  },
-  "include": [
-    "src"
-  ]
+    "lib": ["es6", "dom", "esnext", "webworker"]
+  }
 }

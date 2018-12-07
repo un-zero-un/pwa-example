@@ -1,5 +1,8 @@
 const Encore = require('@symfony/webpack-encore');
 const webpack = require('webpack');
+const path = require('path');
+const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 
 let config = Encore
@@ -16,7 +19,27 @@ let config = Encore
     .addPlugin(new webpack.DefinePlugin({
         'process.env.REACT_APP_API_ENTRYPOINT': JSON.stringify(process.env.REACT_APP_API_ENTRYPOINT),
     }))
+    .addPlugin(new ServiceWorkerWebpackPlugin({
+        entry:    path.join(__dirname, 'src/service-worker.js'),
+        excludes: ['**/.*', '**/*.map', '*.html'],
+    }))
+    .addPlugin(new CopyWebpackPlugin([{ from: 'public/app.webmanifest', to: 'build/app.webmanifest' }]))
     .getWebpackConfig()
 ;
+
+
+if (!Encore.isProduction()) {
+    config = {
+        ...config,
+        output:    {
+            ...config.output,
+            publicPath: 'https://localhost/',
+        },
+        devServer: {
+            ...config.devServer,
+            disableHostCheck: true,
+        },
+    };
+}
 
 module.exports = config;

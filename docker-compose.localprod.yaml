@@ -1,0 +1,20 @@
+version: '3.7'
+
+services:
+    api_php:
+        environment:
+            - APP_ENV=prod
+
+    app:
+        environment:
+            - APP_ENV=prod
+
+    proxy:
+        build:
+            context: ./proxy
+        environment:
+            - APP_ENV=prod
+        depends_on:
+            - app
+            - api_nginx
+        ports: [ '443:443', '8443:8443' ]
