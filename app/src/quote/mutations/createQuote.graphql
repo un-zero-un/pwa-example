@@ -1,0 +1,20 @@
+mutation createTodo(
+    $title: String!
+    $author: String!
+    $text: String!
+) {
+    createQuote(input: {
+        author: $author,
+        title: $title,
+        slug: $title,
+        text: $text,
+        clientMutationId: "CREATE_CLIENT"
+    }) {
+        id,
+        slug,
+        author,
+        title,
+        text,
+        clientMutationId,
+    }
+}

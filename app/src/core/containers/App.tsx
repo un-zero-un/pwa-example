@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Route} from 'react-router';
+import {Route, Switch} from 'react-router';
 import {Helmet} from 'react-helmet';
 import {CssBaseline} from '@material-ui/core';
 
@@ -10,6 +10,7 @@ import QuoteProvider from "../../quote/containers/QuoteProvider";
 import TopBar from "../components/TopBar";
 
 import '../styles/App.scss';
+import CreateQuote from "../../quote/containers/CreateQuote";
 
 class App extends Component {
     render() {
@@ -25,10 +26,14 @@ class App extends Component {
                     <TopBar/>
 
                     <main>
-                        <Route exact path="/"
-                               render={() => <QuoteListProvider render={props => <QuoteList {...props} />}/>}/>
-                        <Route exact path="/quotes/:slug"
-                               render={({match}) => <QuoteProvider slug={match.params.slug} render={props => <Quote {...props} />}/>}/>
+                        <Switch>
+                            <Route exact path="/"
+                                   render={() => <QuoteListProvider render={props => <QuoteList {...props} />}/>}/>
+                            <Route exact path="/quotes/create"
+                                   render={() => <CreateQuote/>}/>
+                            <Route exact path="/quotes/:slug"
+                                   render={({match}) => <QuoteProvider slug={match.params.slug} render={props => <Quote {...props} />}/>}/>
+                        </Switch>
                     </main>
                 </div>
             </>

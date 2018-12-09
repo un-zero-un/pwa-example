@@ -23,7 +23,7 @@ export default ({quotes}: Props) => (
                                 </Typography>
                             </Link>
                             <p>
-                                {edge.node.text.substr(0, 200) + (edge.node.text.length > 200 && '…')}
+                                {edge.node.text.substr(0, 200) + (edge.node.text.length > 200 ? '…' : '')}
                             </p>
                             <cite>{edge.node.author}</cite>
                         </ListItemText>
