@@ -1,40 +1,49 @@
 import React from 'react';
-import {reduxForm, InjectedFormProps, Field} from "redux-form";
-import {connect} from "react-redux";
+import {reduxForm, InjectedFormProps, Field} from 'redux-form';
+import {createStyles, List, ListItem, Paper, Theme, WithStyles, withStyles} from '@material-ui/core';
 
 import {Quote} from "../types/Quote";
+import {TextField} from "../../core/forms/material";
 
 type Errors = { [path: string]: string };
-type Props = {
-    errors?: Errors
-}
+type Props = { errors?: Errors }
 
-type FormProps = InjectedFormProps<Quote, Props> & Props;
-
-const QuoteForm = ({handleSubmit, pristine, submitting, errors}: FormProps) => {
-    console.log(pristine, submitting, errors);
-
-    return (
-        <form onSubmit={handleSubmit}>
-            <div>
-                <label htmlFor="author">Author</label>
-                <Field name="author" component="input" type="text" disabled={submitting} />
-            </div>
-            <div>
-                <label htmlFor="author">Title</label>
-                <Field name="title" component="input" type="text" disabled={submitting} />
-            </div>
-            <div>
-                <label htmlFor="author">Text</label>
-                <Field name="text" component="input" type="text" disabled={submitting} />
-            </div>
-            <button type="submit" disabled={pristine || submitting}>Submit</button>
-        </form>
-    );
+interface FormProps extends InjectedFormProps<Quote, Props>, WithStyles, Props {
 };
 
-export default reduxForm<Quote, Props>({form: 'quote'})(connect(
-    (state: { form: { quote?: { submitErrors?: Errors } } }) => ({
-        errors: state.form.quote ? state.form.quote.submitErrors : {},
-    })
-)(QuoteForm));
+const styles = (theme: Theme) => createStyles({
+    root: {
+        ...theme.mixins.gutters(),
+        margin: theme.spacing.unit * 2,
+        paddingTop: theme.spacing.unit * 2,
+        paddingBottom: theme.spacing.unit * 2,
+    },
+
+    list: {
+        width: '100%',
+    }
+});
+
+const QuoteForm = ({handleSubmit, pristine, submitting, classes}: FormProps) => (
+    <Paper elevation={2} className={classes.root}>
+        <List component="form" onSubmit={handleSubmit} className={classes.list}>
+            <ListItem>
+                <Field name="author" component={TextField} label="Author"/>
+            </ListItem>
+
+            <ListItem>
+                <Field name="title" component={TextField} label="Title"/>
+            </ListItem>
+
+            <ListItem>
+                <Field name="text" component={TextField} label="Text"/>
+            </ListItem>
+
+            <ListItem>
+                <button type="submit" disabled={pristine || submitting}>Submit</button>
+            </ListItem>
+        </List>
+    </Paper>
+);
+
+export default reduxForm<Quote, Props>({form: 'quote'})(withStyles(styles)(QuoteForm));

@@ -19,9 +19,7 @@ const styles = (theme: Theme) => createStyles({
     }
 });
 
-interface Props extends WithStyles, RouteComponentProps {
-
-}
+interface Props extends WithStyles, RouteComponentProps {}
 
 export default withRouter(withStyles(styles)(({classes}: Props) => (
     <AppBar position="sticky" color="primary" className={classes.appBar}>
