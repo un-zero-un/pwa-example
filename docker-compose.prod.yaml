@@ -2,9 +2,11 @@ version: '3.7'
 
 services:
     api_php:
+        env_file: ./.env.prod
         environment:
             - APP_ENV=prod
 
     app:
+        env_file: ./.env.prod
         environment:
             - APP_ENV=prod
