@@ -4,6 +4,7 @@ services:
     api_php:
         env_file: ./api/.env
         image: ${CONTAINER_REGISTRY_BASE}/api_php
+        networks: [ api, database ]
         build:
             context: ./api
             target: api_php
@@ -16,6 +17,7 @@ services:
     api_nginx:
         image: ${CONTAINER_REGISTRY_BASE}/api_nginx
         ports: [ '${API_PORT}:80' ]
+        networks: [ api, front ]
         build:
             context: ./api
             target: api_nginx
@@ -28,6 +30,7 @@ services:
     database:
         image: postgres:11-alpine
         volumes: [ 'database-data:/var/lib/postgresql/data' ]
+        networks: [ database ]
         environment:
             - POSTGRES_DB=pwapoc
             - POSTGRES_USER=pwapoc
@@ -37,6 +40,7 @@ services:
         env_file: ./app/.env
         image: ${CONTAINER_REGISTRY_BASE}/app
         ports: [ '${APP_PORT}:3001' ]
+        networks: [ api, front ]
         build:
             context: ./app
             args:
@@ -46,3 +50,8 @@ services:
 
 volumes:
     database-data: ~
+
+networks:
+    api: ~
+    database: ~
+    front: ~

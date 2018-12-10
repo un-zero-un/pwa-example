@@ -1,7 +1,7 @@
 build: app/.env api/.env .env
 	docker-compose build
 
-run: app/.env api/.env
+run: app/.env api/.env .env
 	docker-compose up -d
 	./exec-in-api.sh composer install
 	make reset
