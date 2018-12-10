@@ -1,4 +1,4 @@
-build: app/.env api/.env
+build: app/.env api/.env .env
 	docker-compose build
 
 run: app/.env api/.env
@@ -18,3 +18,7 @@ app/.env: app/.env.dist
 
 api/.env: api/.env.dist
 	cp api/.env.dist api/.env
+
+
+.env: .env.dist
+		cp .env.dist .env
